@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perhitungan Subsidi Persenan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input, button {
+            margin: 10px 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Perhitungan Subsidi Persenan</h1>
+    <label for="totalBayar">Kas yang dibayarkan:</label>
+    <input type="number" id="totalBayar" placeholder="Kas per pertemuan" step="0.01">
+
+    <label for="jumlahPembayaran">Jumlah Pertemuan:</label>
+    <input type="number" id="jumlahPembayaran" placeholder="Jumlah pertemuan">
+
+    <label for="persentase">Persentase Subsidi (%):</label>
+    <input type="number" id="persentase" placeholder="Masukkan persentase subsidi" step="0.01">
+
+    <button onclick="hitungSubsidi()">Hitung Subsidi</button>
+
+    <h2 id="hasil"></h2>
+
+    <script>
+        function hitungSubsidi() {
+            const totalBayar = parseFloat(document.getElementById('totalBayar').value);
+            const jumlahPembayaran = parseInt(document.getElementById('jumlahPembayaran').value);
+            const persentase = parseFloat(document.getElementById('persentase').value);
+
+            if (isNaN(totalBayar) || isNaN(jumlahPembayaran) || isNaN(persentase) || totalBayar < 0 || jumlahPembayaran < 1 || persentase < 0) {
+                document.getElementById('hasil').innerText = 'Masukkan angka yang valid.';
+                return;
+            }
+
+            const subsidiPerPembayaran = (persentase / 100) * totalBayar;
+            const totalSubsidi = subsidiPerPembayaran * jumlahPembayaran;
+            const totalSetelahSubsidi = (totalBayar * jumlahPembayaran) - totalSubsidi;
+
+            document.getElementById('hasil').innerText = 
+                `Subsidi per Pembayaran: Rp ${subsidiPerPembayaran.toFixed(2)}\n` +
+                `Total Subsidi: Rp ${totalSubsidi.toFixed(2)}\n` +
+                `Total Setelah Subsidi: Rp ${totalSetelahSubsidi.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
